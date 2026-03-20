@@ -1,0 +1,27 @@
+name: Hourly Crypto Scraper
+
+on:
+  schedule:
+    - cron: '5 * * * *' # Runs at 5 minutes past every hour
+  workflow_dispatch: # Allows you to trigger it manually
+
+jobs:
+  scrape-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: pip install requests supabase
+
+      - name: Run Scraper
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+        run: python scraper.py
