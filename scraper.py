@@ -27,7 +27,7 @@ print("Connection established.")
 
 
 def fetch_and_store_crypto_data(symbol="ETHUSDT", interval="1h"):
-    url = "https://api.binance.com/api/v3/klines"
+    url = "https://api.binance.us/api/v3/klines"
     params = {"symbol": symbol, "interval": interval, "limit": 2}
 
     response = requests.get(url, params=params)
