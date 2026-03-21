@@ -6,6 +6,14 @@ from supabase import create_client, Client
 SUPABASE_URL = "SUPABASE_URL"
 SUPABASE_KEY = "SUPABASE_KEY"
 
+print("--- DIAGNOSTIC DATA ---")
+# We slice the strings to avoid leaking your full secret in the public GitHub logs
+print(f"URL Starts With: '{str(SUPABASE_URL)[:5]}'")
+print(f"URL Ends With: '{str(SUPABASE_URL)[-5:]}'")
+print(f"URL Length: {len(str(SUPABASE_URL))}")
+print(f"Key Starts With: '{str(SUPABASE_KEY)[:5]}'")
+print("-----------------------")
+
 # Initialize connection
 print("Attempting to connect to Supabase...")
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
