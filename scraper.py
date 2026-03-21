@@ -1,18 +1,24 @@
+import os
 import requests
 from datetime import datetime, timezone
 from supabase import create_client, Client
 
-# Hardcoded for local testing ONLY.
-SUPABASE_URL = "SUPABASE_URL"
-SUPABASE_KEY = "SUPABASE_KEY"
+# Fetching the environment variables injected by GitHub Actions
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 
 print("--- DIAGNOSTIC DATA ---")
-# We slice the strings to avoid leaking your full secret in the public GitHub logs
-print(f"URL Starts With: '{str(SUPABASE_URL)[:5]}'")
-print(f"URL Ends With: '{str(SUPABASE_URL)[-5:]}'")
-print(f"URL Length: {len(str(SUPABASE_URL))}")
-print(f"Key Starts With: '{str(SUPABASE_KEY)[:5]}'")
+if SUPABASE_URL and SUPABASE_KEY:
+    print(f"URL Starts With: '{str(SUPABASE_URL)[:5]}'")
+    print(f"URL Ends With: '{str(SUPABASE_URL)[-5:]}'")
+    print(f"URL Length: {len(str(SUPABASE_URL))}")
+    print(f"Key Starts With: '{str(SUPABASE_KEY)[:5]}'")
+else:
+    print("VARIABLES ARE NONE - GITHUB SECRETS NOT INJECTED PROPERLY")
 print("-----------------------")
+
+if not SUPABASE_URL or not SUPABASE_KEY:
+    raise ValueError("CRITICAL ERROR: Supabase keys are missing.")
 
 # Initialize connection
 print("Attempting to connect to Supabase...")
